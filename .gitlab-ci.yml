@@ -1,0 +1,19 @@
+stages:
+    - build
+    - test
+
+build-job:
+    image: 3.8.4-openjdk-17
+    stage: build
+    script:
+        - "mvn package -B"
+
+test-job:
+    image: 3.8.4-openjdk-17
+    stage: test
+    script:
+        - "mvn test"
+    artifacts:
+        paths:
+            - target/*.jar
+
