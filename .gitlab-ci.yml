@@ -9,7 +9,7 @@ build-job:
         - "mvn package -B"
 
 test-job:
-    image: 3.8.4-openjdk-17
+    image: maven:3.8.4-openjdk-17
     stage: test
     script:
         - "mvn test"
