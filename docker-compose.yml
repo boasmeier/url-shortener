@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  url-shortener:
+    image: gitlab.enterpriselab.ch:4567/enlab-22-fs011/g3/url-shortener:chore-containerization
+    container_name: url-shortener
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - backend_net
+
+networks:
+  backend_net:
+    driver: bridge
+

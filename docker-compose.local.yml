@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  url-shortener:
+    build: ""
+    container_name: url-shortener
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - backend_net
+
+networks:
+  backend_net:
+    driver: bridge
