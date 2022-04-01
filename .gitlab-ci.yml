@@ -1,12 +1,54 @@
 stages:
+    - .pre
     - build
     - test
+
+dependency-build-job:
+    image:
+        name: gcr.io/kaniko-project/executor:debug
+        entrypoint: [ "" ]
+    stage: .pre
+    variables:
+        SSL_CERT_DIR: "/tmp/other-ssl-dir"
+    script:
+        - mkdir -p /kaniko/.docker
+        - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+        - >-
+            /kaniko/executor
+            --target=dependencies
+            --cache=true
+            --context "${CI_PROJECT_DIR}"
+            --dockerfile "${CI_PROJECT_DIR}/docker/dependency-image/Dockerfile"
+            --destination "${CI_REGISTRY_IMAGE}/dependencies:latest"
+            --skip-tls-verify
+    when: manual
+    allow_failure: true
 
 build-job:
     image: maven:3.8.4-openjdk-17
     stage: build
     script:
         - "mvn package -B"
+
+container-build-job:
+    image:
+        name: gcr.io/kaniko-project/executor:debug
+        entrypoint: [ "" ]
+    stage: build
+    variables:
+        SSL_CERT_DIR: "/tmp/other-ssl-dir"
+    script:
+        - mkdir -p /kaniko/.docker
+        - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+        - export DEPENDENCIES_IMAGE="${CI_REGISTRY_IMAGE}/dependencies:latest"
+        - >-
+            /kaniko/executor
+            --cache=false
+            --context "${CI_PROJECT_DIR}"
+            --dockerfile "${CI_PROJECT_DIR}/docker/build-image/Dockerfile"
+            --destination "${CI_REGISTRY_IMAGE}:${CI_COMMIT_REF_SLUG-build}"
+            --build-arg DEPENDENCIES_IMAGE
+            --skip-tls-verify
 
 test-job:
     image: maven:3.8.4-openjdk-17
