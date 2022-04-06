@@ -2,6 +2,7 @@ stages:
     - .pre
     - build
     - test
+    - deploy
 
 dependency-build-job:
     image:
@@ -59,3 +60,18 @@ test-job:
         paths:
             - target/*.jar
 
+deploy-job:
+    stage: deploy
+    before_script:
+        - apk add git
+        # Setup SSH deploy keys
+        - 'which ssh-agent || ( apk add openssh-client )'
+        - eval $(ssh-agent -s)
+        - ssh-add <(echo "$SSH_PRIVATE_KEY")
+        - mkdir -p ~/.ssh
+        - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    script:
+        - ssh localadmin@enlab-f22-bmeier.el.eee.intern "cd git/url-shortener && git checkout main && git pull origin main && docker-compose up --build -d && exit"
+    only:
+      refs:
+        - main
