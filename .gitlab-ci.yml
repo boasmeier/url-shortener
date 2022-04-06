@@ -71,7 +71,7 @@ deploy-job:
         - mkdir -p ~/.ssh
         - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
     script:
-        - ssh localadmin@enlab-f22-bmeier.el.eee.intern "cd git/url-shortener && git checkout main && git pull origin main && docker-compose up --build -d && exit"
+        - ssh localadmin@enlab-f22-bmeier.el.eee.intern "cd git/url-shortener && bash deploy.sh && exit"
     only:
       refs:
         - main
