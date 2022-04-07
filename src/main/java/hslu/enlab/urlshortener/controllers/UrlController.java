@@ -29,7 +29,7 @@ public class UrlController {
 
     @GetMapping("/")
     public String index() {
-        return "Greetings from URL-Shortener!";
+        return "Greetings from URL-Shortener! Deploy job works! :D";
     }
 
     @PostMapping(value = "/create")
