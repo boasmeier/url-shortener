@@ -18,6 +18,10 @@ public class UrlService {
 
     public UrlEntity create(String url) {
 
+        if (url.startsWith("www")) {
+            url = url.replace("www.", "https://");
+        }
+
         UrlEntity existingUrlEntity = urlRepository.findUrlEntityByUrl(url);
 
         if (existingUrlEntity != null) {
@@ -37,6 +41,16 @@ public class UrlService {
         urlEntity.setUrl(url);
 
         return urlRepository.save(urlEntity);
+    }
+
+    public String findUrl(String shortenedUrl) {
+        UrlEntity urlEntity = urlRepository.findUrlEntityById(shortenedUrl);
+
+        if (urlEntity == null) {
+            throw new RuntimeException("Link not found");
+        }
+
+        return urlEntity.getUrl();
     }
 
 }
