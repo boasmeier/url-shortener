@@ -29,7 +29,7 @@ build-job:
     image: maven:3.8.4-openjdk-17
     stage: build
     script:
-        - "mvn package -B"
+        - mvn package -B
 
 container-build-job:
     image:
@@ -59,6 +59,20 @@ test-job:
     artifacts:
         paths:
             - target/*.jar
+
+acceptance-test:
+    image: gitlab.enterpriselab.ch:4567/enlab-22-fs011/g3/url-shortener:main
+    stage: test
+    script:
+        - mvn spring-boot:run &
+        - sleep 20
+        - mvn test -Dtest=KarateAcceptance
+    artifacts:
+        paths:
+            - target/karate-reports
+    only:
+        refs:
+            - main
 
 deploy-job:
     stage: deploy
