@@ -55,10 +55,10 @@ test-job:
     image: maven:3.8.4-openjdk-17
     stage: test
     script:
-        - "mvn test"
+        - "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent test jacoco:report"
     artifacts:
         paths:
-            - target/*.jar
+            - target/site/jacoco/jacoco.xml
 
 acceptance-test:
     image: gitlab.enterpriselab.ch:4567/enlab-22-fs011/g3/url-shortener:main
@@ -74,6 +74,12 @@ acceptance-test:
         refs:
             - main
 
+sonar-cloud-job:
+    image: maven:3.8.4-openjdk-17
+    stage: deploy
+    script:
+        - mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=hslu.enlab:url-shortener
+
 deploy-job:
     stage: deploy
     before_script:
@@ -87,5 +93,5 @@ deploy-job:
     script:
         - ssh localadmin@enlab-f22-bmeier.el.eee.intern "cd git/url-shortener && bash deploy.sh && exit"
     only:
-      refs:
-        - main
+        refs:
+            - main
