@@ -64,8 +64,6 @@ acceptance-test:
     image: gitlab.enterpriselab.ch:4567/enlab-22-fs011/g3/url-shortener:main
     stage: test
     script:
-        - mvn spring-boot:run &
-        - sleep 20
         - mvn test -Dtest=KarateAcceptance
     artifacts:
         paths:
