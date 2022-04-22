@@ -1,6 +1,3 @@
 package hslu.enlab.urlshortener.dtos;
 
-public class UrlDto {
-    public String url;
-    public String shortenedUrl;
-}
+public record UrlDto (String url, String shortenedUrl) { }

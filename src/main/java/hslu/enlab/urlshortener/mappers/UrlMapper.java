@@ -9,17 +9,17 @@ import org.springframework.stereotype.Component;
 public class UrlMapper {
 
     public UrlDto toDto(UrlEntity urlEntity) {
-        UrlDto urlDto = new UrlDto();
-        urlDto.url = urlEntity.getUrl();
-        urlDto.shortenedUrl = urlEntity.getId();
+        return new UrlDto(
+                urlEntity.getUrl(),
+                urlEntity.getId()
+        );
 
-        return urlDto;
     }
 
     public UrlEntity fromDto(UrlDto urlDto) {
         UrlEntity urlEntity = new UrlEntity();
-        urlEntity.setId(urlDto.shortenedUrl);
-        urlEntity.setUrl(urlDto.url);
+        urlEntity.setId(urlDto.shortenedUrl());
+        urlEntity.setUrl(urlDto.url());
 
         return urlEntity;
     }
