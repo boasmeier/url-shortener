@@ -17,28 +17,15 @@ public class UrlService {
     }
 
     public UrlEntity create(String url) {
-
-        if (url.startsWith("www")) {
-            url = url.replace("www.", "https://");
-        }
-
+        url = transformToValidUrl(url);
         UrlEntity existingUrlEntity = urlRepository.findUrlEntityByUrl(url);
 
         if (existingUrlEntity != null) {
             return existingUrlEntity;
         }
 
-        String id = RandomStringUtils.random(8, true, true);
-
-        boolean exists = urlRepository.existsUrlEntityById(id);
-
-        if (exists) {
-            create(url);
-        }
-
-        UrlEntity urlEntity = new UrlEntity();
-        urlEntity.setId(id);
-        urlEntity.setUrl(url);
+        String id = generateUniqueId();
+        var urlEntity = generateUrlEntity(id, url);
 
         return urlRepository.save(urlEntity);
     }
@@ -51,6 +38,33 @@ public class UrlService {
         }
 
         return urlEntity.getUrl();
+    }
+
+    private String transformToValidUrl(String url) {
+        if (url.startsWith("www")) {
+            url = url.replace("www.", "https://");
+        }
+
+        return url;
+    }
+
+    private String generateUniqueId() {
+        String id = RandomStringUtils.random(8, true, true);
+        boolean exists = urlRepository.existsUrlEntityById(id);
+
+        if (exists) {
+            id = generateUniqueId();
+        }
+
+        return id;
+    }
+
+    private UrlEntity generateUrlEntity(String id, String url) {
+        UrlEntity urlEntity = new UrlEntity();
+        urlEntity.setId(id);
+        urlEntity.setUrl(url);
+
+        return urlEntity;
     }
 
 }

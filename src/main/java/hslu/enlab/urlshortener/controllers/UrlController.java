@@ -36,7 +36,7 @@ public class UrlController {
 
     @PostMapping(value = "/create")
     public ResponseEntity<UrlDto> create(@RequestBody UrlDto urlDto) {
-        UrlEntity urlEntity = urlService.create(urlDto.url);
+        UrlEntity urlEntity = urlService.create(urlDto.url());
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequestUri()

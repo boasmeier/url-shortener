@@ -10,11 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.springframework.util.Assert;
 
 @ExtendWith(MockitoExtension.class)
-public class UrlServiceTest {
+class UrlServiceTest {
 
     @InjectMocks
     UrlService testee;
