@@ -1,8 +1,8 @@
 package hslu.enlab.urlshortener;
 
-import hslu.enlab.urlshortener.entities.UrlEntity;
-import hslu.enlab.urlshortener.repositories.UrlRepository;
-import hslu.enlab.urlshortener.services.UrlService;
+import hslu.enlab.urlshortener.entities.ShortUrl;
+import hslu.enlab.urlshortener.repositories.ShortUrlRepository;
+import hslu.enlab.urlshortener.services.ShortUrlService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,14 +11,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.UUID;
+
 @ExtendWith(MockitoExtension.class)
-class UrlServiceTest {
+class ShortUrlServiceTest {
 
     @InjectMocks
-    UrlService testee;
+    ShortUrlService testee;
 
     @Mock
-    UrlRepository urlRepository;
+    ShortUrlRepository shortUrlRepository;
 
     @Test
     void shouldCreateShortUrl() {
@@ -29,7 +31,7 @@ class UrlServiceTest {
         testee.create(url);
 
         // assert
-        Mockito.verify(urlRepository).save(Mockito.any(UrlEntity.class));
+        Mockito.verify(shortUrlRepository).save(Mockito.any(ShortUrl.class));
     }
 
     @Test
@@ -37,17 +39,17 @@ class UrlServiceTest {
         // arrange
         String url = "https://existingurl.com";
 
-        UrlEntity expectedUrlEntity = new UrlEntity();
-        expectedUrlEntity.setId("123");
-        expectedUrlEntity.setUrl(url);
+        ShortUrl expectedShortUrl = new ShortUrl();
+        expectedShortUrl.setId(UUID.randomUUID());
+        expectedShortUrl.setUrl(url);
 
-        Mockito.when(urlRepository.findUrlEntityByUrl(url)).thenReturn(expectedUrlEntity);
+        Mockito.when(shortUrlRepository.findUrlEntityByUrl(url)).thenReturn(expectedShortUrl);
 
         // act
-        UrlEntity result = testee.create(url);
+        ShortUrl result = testee.create(url);
 
         // assert
-        Assertions.assertEquals(expectedUrlEntity, result);
+        Assertions.assertEquals(expectedShortUrl, result);
     }
 
     @Test
@@ -59,7 +61,7 @@ class UrlServiceTest {
         testee.create(url);
 
         // assert
-        Mockito.verify(urlRepository).findUrlEntityByUrl("https://google.ch");
+        Mockito.verify(shortUrlRepository).findUrlEntityByUrl("https://google.ch");
     }
 
 }
