@@ -68,9 +68,6 @@ acceptance-test:
     artifacts:
         paths:
             - target/karate-reports
-    only:
-        refs:
-            - main
 
 sonar-cloud-job:
     image: maven:3.8.4-openjdk-17
