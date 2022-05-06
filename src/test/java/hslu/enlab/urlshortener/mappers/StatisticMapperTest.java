@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
@@ -59,7 +59,7 @@ import static org.junit.jupiter.api.Assertions.*;
         List<StatisticDto> actual = statisticMapper.toDtos(Collections.emptyList());
 
         // assert
-        assertThat(actual.size()).isEqualTo(0);
+        assertThat(actual).isEmpty();
     }
 
     @Test
@@ -85,6 +85,6 @@ import static org.junit.jupiter.api.Assertions.*;
         List<StatisticDto> actual = statisticMapper.toDtos(statistics);
 
         // assert
-        assertThat(actual.size()).isEqualTo(3);
+        assertThat(actual).hasSize(3);
     }
 }

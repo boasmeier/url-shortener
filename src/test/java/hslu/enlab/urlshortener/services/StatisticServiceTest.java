@@ -67,8 +67,8 @@ class StatisticServiceTest {
         // assert
         Mockito.verify(statisticRepository).save(argThat(s -> {
             assertThat(s.getShortUrlId()).isEqualTo(shortUrlId);
-            assertThat(s.getTotalNumberOfCalls()).isEqualTo(0);
-            assertThat(s.getAverageForwardDurationInMillis()).isEqualTo(0);
+            assertThat(s.getTotalNumberOfCalls()).isZero();
+            assertThat(s.getAverageForwardDurationInMillis()).isZero();
             assertThat(s.getTimeOfLastCall()).isNull();
             return true;
         }));
