@@ -3,6 +3,7 @@ package hslu.enlab.urlshortener;
 import hslu.enlab.urlshortener.entities.ShortUrl;
 import hslu.enlab.urlshortener.repositories.ShortUrlRepository;
 import hslu.enlab.urlshortener.services.ShortUrlService;
+import hslu.enlab.urlshortener.services.StatisticService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,6 +22,9 @@ class ShortUrlServiceTest {
 
     @Mock
     ShortUrlRepository shortUrlRepository;
+
+    @Mock
+    StatisticService statisticService;
 
     @Test
     void shouldCreateShortUrl() {
@@ -53,7 +57,7 @@ class ShortUrlServiceTest {
     }
 
     @Test
-    void shouldReplaceWwwWithHttps() {
+    void shouldPrefixWithHttps() {
         // arrange
         String url = "www.google.ch";
 
@@ -61,7 +65,7 @@ class ShortUrlServiceTest {
         testee.create(url);
 
         // assert
-        Mockito.verify(shortUrlRepository).findUrlEntityByUrl("https://google.ch");
+        Mockito.verify(shortUrlRepository).findUrlEntityByUrl("https://www.google.ch");
     }
 
 }
