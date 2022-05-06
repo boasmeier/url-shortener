@@ -60,9 +60,7 @@ test-job:
     coverage: '/Branches.*?([0-9]{1,3})%/'
     artifacts:
         paths:
-            - target/site/jacoco/jacoco.xml
-            - target/site/jacoco/index.html
-            - target/site/jacoco/jacoco.csv
+            - target/site/jacoco/
 
 acceptance-test:
     image: gitlab.enterpriselab.ch:4567/enlab-22-fs011/g3/url-shortener:main
