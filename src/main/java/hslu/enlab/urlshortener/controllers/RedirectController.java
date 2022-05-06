@@ -20,7 +20,7 @@ public class RedirectController {
         this.shortUrlService = shortUrlService;
     }
 
-    @GetMapping(value = "/{shortUrl}")
+    @GetMapping(value = "/r/{shortUrl}")
     public ResponseEntity<Void> redirect(@PathVariable String shortUrl) {
         String url = shortUrlService.findUrl(shortUrl);
 
