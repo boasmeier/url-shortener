@@ -1,9 +1,10 @@
-package hslu.enlab.urlshortener;
+package hslu.enlab.urlshortener.services;
 
 import hslu.enlab.urlshortener.entities.ShortUrl;
 import hslu.enlab.urlshortener.repositories.ShortUrlRepository;
 import hslu.enlab.urlshortener.services.ShortUrlService;
 import hslu.enlab.urlshortener.services.StatisticService;
+import org.assertj.core.util.VisibleForTesting;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -66,6 +67,18 @@ class ShortUrlServiceTest {
 
         // assert
         Mockito.verify(shortUrlRepository).findUrlEntityByUrl("https://www.google.ch");
+    }
+
+    @Test
+    void shouldDeleteShortUrl() {
+        // arrange
+        UUID id = UUID.randomUUID();
+
+        // act
+        testee.delete(id);
+
+        // assert
+        Mockito.verify(shortUrlRepository).deleteShortUrlById(id);
     }
 
 }
