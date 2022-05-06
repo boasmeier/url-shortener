@@ -13,9 +13,12 @@ public class ShortUrlService {
 
     private final ShortUrlRepository shortUrlRepository;
 
+    private final StatisticService statisticService;
+
     @Autowired
-    ShortUrlService(ShortUrlRepository shortUrlRepository) {
+    ShortUrlService(ShortUrlRepository shortUrlRepository, StatisticService statisticService) {
         this.shortUrlRepository = shortUrlRepository;
+        this.statisticService = statisticService;
     }
 
     public ShortUrl create(String url) {
@@ -29,7 +32,11 @@ public class ShortUrlService {
         String shortUrl = generateUniqueShortUrl();
         var urlEntity = generateUrlEntity(shortUrl, url);
 
-        return shortUrlRepository.save(urlEntity);
+        shortUrlRepository.save(urlEntity);
+
+        createDefaultStatistic(urlEntity.getId());
+
+        return urlEntity;
     }
 
     public ShortUrl put(ShortUrl shortUrl, UUID id) {
@@ -42,19 +49,19 @@ public class ShortUrlService {
         shortUrlRepository.deleteShortUrlById(id);
     }
 
-    public String findUrl(String shortenedUrl) {
+    public ShortUrl findUrl(String shortenedUrl) {
         ShortUrl shortUrl = shortUrlRepository.findUrlEntityByShortUrl(shortenedUrl);
 
         if (shortUrl == null) {
             throw new RuntimeException("Link not found");
         }
 
-        return shortUrl.getUrl();
+        return shortUrl;
     }
 
     private String transformToValidUrl(String url) {
-        if (url.startsWith("www")) {
-            url = url.replace("www.", "https://");
+        if (!url.startsWith("http")) {
+            url = String.format("https://%s", url);
         }
 
         return url;
@@ -78,6 +85,10 @@ public class ShortUrlService {
         shortUrl.setUrl(url);
 
         return shortUrl;
+    }
+
+    private void createDefaultStatistic(UUID id) {
+        statisticService.createStatistic(id);
     }
 
 }
