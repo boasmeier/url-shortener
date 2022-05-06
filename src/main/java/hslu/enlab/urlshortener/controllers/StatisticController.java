@@ -1,0 +1,36 @@
+package hslu.enlab.urlshortener.controllers;
+
+import hslu.enlab.urlshortener.dtos.StatisticDto;
+import hslu.enlab.urlshortener.entities.Statistic;
+import hslu.enlab.urlshortener.mappers.StatisticMapper;
+import hslu.enlab.urlshortener.services.StatisticService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/v1/statistics")
+public class StatisticController {
+
+    private final StatisticService statisticService;
+
+    private final StatisticMapper statisticMapper;
+
+    @Autowired
+    StatisticController(StatisticService statisticService, StatisticMapper statisticMapper) {
+        this.statisticService = statisticService;
+        this.statisticMapper = statisticMapper;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<StatisticDto>> findAll() {
+        List<Statistic> statistics = statisticService.findAll();
+
+        return ResponseEntity.ok(statisticMapper.toDtos(statistics));
+    }
+
+}
