@@ -38,6 +38,10 @@ public class ShortUrlService {
         return shortUrlRepository.save(shortUrl);
     }
 
+    public void delete(UUID id) {
+        shortUrlRepository.deleteShortUrlById(id);
+    }
+
     public String findUrl(String shortenedUrl) {
         ShortUrl shortUrl = shortUrlRepository.findUrlEntityByShortUrl(shortenedUrl);
 

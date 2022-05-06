@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface ShortUrlRepository extends JpaRepository<ShortUrl, String> {
+public interface ShortUrlRepository extends JpaRepository<ShortUrl, UUID> {
+
+    void deleteShortUrlById(UUID id);
 
     boolean existsUrlEntityByShortUrl(String shortUrl);
 

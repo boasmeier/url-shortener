@@ -6,6 +6,7 @@ import hslu.enlab.urlshortener.mappers.ShortUrlMapper;
 import hslu.enlab.urlshortener.services.ShortUrlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,6 +50,13 @@ public class ShortUrlController {
         ShortUrl shortUrl = shortUrlService.put(shortUrlMapper.fromDto(shortUrlDto), id);
 
         return ResponseEntity.ok(shortUrlMapper.toDto(shortUrl));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        shortUrlService.delete(id);
+
+        return ResponseEntity.noContent().build();
     }
 
 }
