@@ -13,7 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.URI;
 import java.time.Instant;
 
-
+/**
+ * Code of class RedirectController.
+ *
+ * @author Tim Honermann
+ * @version JDK 17.0.2
+ */
 @RestController
 public class RedirectController {
 

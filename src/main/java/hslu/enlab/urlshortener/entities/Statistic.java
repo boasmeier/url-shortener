@@ -6,6 +6,12 @@ import javax.persistence.Id;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+/**
+ * Code of class Statistic.
+ *
+ * @author Tim Honermann
+ * @version JDK 17.0.2
+ */
 @Entity
 public class Statistic {
 

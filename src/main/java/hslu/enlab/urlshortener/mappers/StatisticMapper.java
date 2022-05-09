@@ -6,6 +6,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Code of class StatisticMapper.
+ *
+ * @author Tim Honermann
+ * @version JDK 17.0.2
+ */
 @Component
 public class StatisticMapper {
 

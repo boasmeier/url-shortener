@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+/**
+ * Code of class ShortUrlService.
+ *
+ * @author Tim Honermann
+ * @version JDK 17.0.2
+ */
 @Service
 public class ShortUrlService {
 

@@ -5,6 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
+/**
+ * Code of class UrlShortenerApplication.
+ *
+ * @author Tim Honermann
+ * @version JDK 17.0.2
+ */
 @SpringBootApplication
 public class UrlShortenerApplication extends SpringBootServletInitializer {
 

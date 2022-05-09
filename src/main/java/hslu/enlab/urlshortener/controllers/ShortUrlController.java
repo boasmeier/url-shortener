@@ -23,6 +23,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.UUID;
 
+/**
+ * Code of class ShortUrlController.
+ *
+ * @author Tim Honermann
+ * @version JDK 17.0.2
+ */
 @RestController
 @RequestMapping(value = "/v1/shorturls")
 public class ShortUrlController {

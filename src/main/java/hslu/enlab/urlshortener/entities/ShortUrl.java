@@ -4,6 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.UUID;
 
+/**
+ * Code of class ShortUrl.
+ *
+ * @author Tim Honermann
+ * @version JDK 17.0.2
+ */
 @Entity
 public class ShortUrl {
     @Id

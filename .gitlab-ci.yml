@@ -30,6 +30,7 @@ build-job:
     stage: build
     script:
         - mvn package -B
+        - mvn javadoc:javadoc
     artifacts:
         paths:
             - target/site/apidocs/
@@ -85,7 +86,7 @@ sonar-cloud-job:
 javadoc-publish:
     stage: deploy
     script:
-        - mv target/site/apidocs/ public/
+        - cp -r target/site/apidocs/ public/
     artifacts:
         paths:
             - public
