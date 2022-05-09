@@ -4,6 +4,9 @@
 
 URL Shortener for ENLAB Project
 
+## Documentation
+* [Javadoc](https://enlab-22-fs011.pages.enterpriselab.ch/g3/url-shortener/)
+
 ## Start from container registry
 ```
 docker-compose up --build
