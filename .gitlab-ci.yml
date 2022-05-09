@@ -90,6 +90,9 @@ pages:
     artifacts:
         paths:
             - public
+    only:
+        refs:
+            - main
 
 deploy-job:
     stage: deploy
