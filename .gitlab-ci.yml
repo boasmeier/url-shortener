@@ -83,7 +83,7 @@ sonar-cloud-job:
     script:
         - mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=hslu.enlab:url-shortener
 
-javadoc-publish:
+pages:
     stage: deploy
     script:
         - cp -r target/site/apidocs/ public/
