@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 /**
  * Code of class StatisticController.
  *
@@ -33,10 +31,10 @@ public class StatisticController {
     }
 
     @GetMapping
-    public ResponseEntity<List<StatisticDto>> findAll() {
-        List<Statistic> statistics = statisticService.findAll();
+    public ResponseEntity<StatisticDto> getOverall() {
+        Statistic statistic = statisticService.getOverallStatistic();
 
-        return ResponseEntity.ok(statisticMapper.toDtos(statistics));
+        return ResponseEntity.ok(statisticMapper.toDto(statistic));
     }
 
 }

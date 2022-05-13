@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalTime;
 import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Code of class StatisticService.
@@ -31,8 +29,8 @@ public class StatisticService {
         return statisticRepository.findStatisticByShortUrlId(shortUrlId);
     }
 
-    public List<Statistic> findAll() {
-        return statisticRepository.findAll();
+    public Statistic getOverallStatistic() {
+        return aggregateStatistics(statisticRepository.findAll());
     }
 
     public void createStatistic(UUID shortUrlId) {
@@ -65,4 +63,35 @@ public class StatisticService {
         return averageForwardDurationInMillis * totalNumberOfCalls + redirectTimeMillis;
     }
 
+    private Statistic aggregateStatistics(List<Statistic> statistics) {
+        Statistic aggregated = new Statistic();
+        aggregated.setTotalNumberOfCalls(getTotalNumberOfCalls(statistics));
+        aggregated.setAverageForwardDurationInMillis(getAverageForwardDuration(statistics));
+
+        Optional<OffsetDateTime> timeOfLastCall = getOffsetDateTime(statistics);
+        aggregated.setTimeOfLastCall(timeOfLastCall.orElse(null));
+
+        return aggregated;
+    }
+
+    private Optional<OffsetDateTime> getOffsetDateTime(List<Statistic> statistics) {
+        return statistics.stream()
+                .map(Statistic::getTimeOfLastCall)
+                .filter(Objects::nonNull)
+                .max(Comparator.naturalOrder());
+    }
+
+    private long getAverageForwardDuration(List<Statistic> statistics) {
+        long totalForwardDuration = statistics.stream()
+                .map(Statistic::getAverageForwardDurationInMillis)
+                .reduce(0L, Long::sum);
+
+        return statistics.isEmpty() ? totalForwardDuration : totalForwardDuration / statistics.size();
+    }
+
+    private long getTotalNumberOfCalls(List<Statistic> statistics) {
+        return statistics.stream()
+                .map(Statistic::getTotalNumberOfCalls)
+                .reduce(0L, Long::sum);
+    }
 }
