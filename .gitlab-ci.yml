@@ -30,6 +30,10 @@ build-job:
     stage: build
     script:
         - mvn package -B
+        - mvn javadoc:javadoc
+    artifacts:
+        paths:
+            - target/site/apidocs/
 
 container-build-job:
     image:
@@ -78,6 +82,17 @@ sonar-cloud-job:
     stage: deploy
     script:
         - mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=hslu.enlab:url-shortener
+
+pages:
+    stage: deploy
+    script:
+        - cp -r target/site/apidocs/ public/
+    artifacts:
+        paths:
+            - public
+    only:
+        refs:
+            - main
 
 deploy-job:
     stage: deploy

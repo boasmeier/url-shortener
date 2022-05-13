@@ -4,7 +4,12 @@ import hslu.enlab.urlshortener.dtos.ShortUrlDto;
 import hslu.enlab.urlshortener.entities.ShortUrl;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * Code of class ShortUrlMapper.
+ *
+ * @author Tim Honermann
+ * @version JDK 17.0.2
+ */
 @Component
 public class ShortUrlMapper {
 

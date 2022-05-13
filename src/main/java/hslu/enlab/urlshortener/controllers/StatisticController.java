@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Code of class StatisticController.
+ *
+ * @author Tim Honermann
+ * @version JDK 17.0.2
+ */
 @RestController
 @RequestMapping(value = "/v1/statistics")
 public class StatisticController {

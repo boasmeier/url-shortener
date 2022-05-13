@@ -11,6 +11,12 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Code of class StatisticService.
+ *
+ * @author Tim Honermann
+ * @version JDK 17.0.2
+ */
 @Service
 public class StatisticService {
 
@@ -44,7 +50,7 @@ public class StatisticService {
 
         long redirectTimeMillis = redirectEnd.toEpochMilli() - redirectStart.toEpochMilli();
         long totalForwardDurationInMillis = calculateTotalForwardDuration(statistic
-                        .getAverageForwardDurationInMillis(), statistic.getTotalNumberOfCalls(), redirectTimeMillis);
+                .getAverageForwardDurationInMillis(), statistic.getTotalNumberOfCalls(), redirectTimeMillis);
         long totalNumberOfCalls = statistic.getTotalNumberOfCalls() + 1;
         long averageForwardDurationInMillis = totalForwardDurationInMillis / totalNumberOfCalls;
 

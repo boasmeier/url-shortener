@@ -6,6 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+/**
+ * Code of interface ShortUrlRepository.
+ *
+ * @author Tim Honermann
+ * @version JDK 17.0.2
+ */
 @Repository
 public interface ShortUrlRepository extends JpaRepository<ShortUrl, UUID> {
 
