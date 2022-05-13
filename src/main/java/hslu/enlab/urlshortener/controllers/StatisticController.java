@@ -31,7 +31,7 @@ public class StatisticController {
     }
 
     @GetMapping
-    public ResponseEntity<StatisticDto> findAll() {
+    public ResponseEntity<StatisticDto> getOverall() {
         Statistic statistic = statisticService.getOverallStatistic();
 
         return ResponseEntity.ok(statisticMapper.toDto(statistic));
