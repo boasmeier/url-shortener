@@ -18,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * @version JDK 17.0.2
  */
 @SpringBootTest(classes = UrlShortenerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class KarateAcceptance {
+public class KarateAcceptanceTest {
     @Karate.Test
     Karate testAll() {
         return Karate.run().relativeTo(getClass());

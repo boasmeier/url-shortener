@@ -1,4 +1,4 @@
-package hslu.enlab.urlshortener;
+package hslu.enlab.urlshortener.mappers;
 
 import hslu.enlab.urlshortener.dtos.ShortUrlDto;
 import hslu.enlab.urlshortener.entities.ShortUrl;

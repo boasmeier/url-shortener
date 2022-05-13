@@ -1,10 +1,10 @@
-CREATE TABLE short_url (
+CREATE TABLE IF NOT EXISTS short_url (
     id UUID PRIMARY KEY,
     short_url VARCHAR (8) NOT NULL,
     url VARCHAR(MAX) NOT NULL
 );
 
-CREATE TABLE statistic (
+CREATE TABLE IF NOT EXISTS statistic (
     id UUID PRIMARY KEY,
     total_number_of_calls BIGINT NOT NULL,
     average_forward_duration_in_millis BIGINT NOT NULL,
