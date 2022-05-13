@@ -1,9 +1,8 @@
 package hslu.enlab.urlshortener.services;
 
-import hslu.enlab.urlshortener.entities.ShortUrl;
 import hslu.enlab.urlshortener.entities.Statistic;
-import hslu.enlab.urlshortener.repositories.ShortUrlRepository;
 import hslu.enlab.urlshortener.repositories.StatisticRepository;
+import org.assertj.core.data.TemporalUnitWithinOffset;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,10 +12,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.argThat;
 
 /*
@@ -48,12 +49,51 @@ class StatisticServiceTest {
     }
 
     @Test
-    void shouldReturnAll() {
+    void shouldReturnCorrectAggregatedOverallStatistic() {
+        // arrange
+        long totalNumberOfCalls = 5;
+        long averageForwardDurationInMillis = 2;
+        var offsetDateTime = OffsetDateTime.now();
+        var offsetDateTime2 = OffsetDateTime.now();
+        offsetDateTime2.minus(10, ChronoUnit.DAYS);
+
+        var statistic = new Statistic();
+        statistic.setId(UUID.randomUUID());
+        statistic.setTotalNumberOfCalls(totalNumberOfCalls);
+        statistic.setAverageForwardDurationInMillis(averageForwardDurationInMillis);
+        statistic.setTimeOfLastCall(offsetDateTime);
+        statistic.setShortUrlId(UUID.randomUUID());
+
+        var statistic2 = new Statistic();
+        statistic2.setId(UUID.randomUUID());
+        statistic2.setTotalNumberOfCalls(totalNumberOfCalls);
+        statistic2.setAverageForwardDurationInMillis(averageForwardDurationInMillis);
+        statistic2.setTimeOfLastCall(offsetDateTime2);
+        statistic2.setShortUrlId(UUID.randomUUID());
+
+        Mockito.when(statisticRepository.findAll()).thenReturn(List.of(statistic, statistic2));
+
         // act
-        testee.findAll();
+        var actual = testee.getOverallStatistic();
 
         // assert
-        Mockito.verify(statisticRepository).findAll();
+        assertThat(actual.getTotalNumberOfCalls()).isEqualTo(10);
+        assertThat(actual.getAverageForwardDurationInMillis()).isEqualTo(averageForwardDurationInMillis);
+        assertThat(actual.getTimeOfLastCall()).isCloseToUtcNow(new TemporalUnitWithinOffset(100L, ChronoUnit.MILLIS));
+    }
+
+    @Test
+    void shouldReturnStatisticWith0Calls() {
+        // arrange
+        Mockito.when(statisticRepository.findAll()).thenReturn(Collections.emptyList());
+
+        // act
+        Statistic actual = testee.getOverallStatistic();
+
+        // assert
+        assertThat(actual.getTotalNumberOfCalls()).isZero();
+        assertThat(actual.getAverageForwardDurationInMillis()).isZero();
+        assertThat(actual.getTimeOfLastCall()).isNull();
     }
 
     @Test
@@ -82,7 +122,7 @@ class StatisticServiceTest {
         long totalNumberOfCalls = 0;
         long averageForwardDurationInMillis = 0;
 
-        var statistic = new Statistic();
+        Statistic statistic = new Statistic();
         statistic.setId(id);
         statistic.setTotalNumberOfCalls(totalNumberOfCalls);
         statistic.setAverageForwardDurationInMillis(averageForwardDurationInMillis);
