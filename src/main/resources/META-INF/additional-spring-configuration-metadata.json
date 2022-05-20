@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "redirection.timeout",
+      "type": "java.lang.String",
+      "description": "Timeout before advertisement site redirects to actual website."
+  }
+] }

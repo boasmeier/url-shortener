@@ -8,4 +8,4 @@ import java.util.UUID;
  * @author Tim Honermann
  * @version JDK 17.0.2
  */
-public record ShortUrlDto(UUID id, String shortUrl, String url) { }
+public record ShortUrlDto(UUID id, String shortUrl, String url, Integer redirectionTimeout) { }

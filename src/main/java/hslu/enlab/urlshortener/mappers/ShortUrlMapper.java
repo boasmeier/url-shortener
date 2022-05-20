@@ -2,6 +2,7 @@ package hslu.enlab.urlshortener.mappers;
 
 import hslu.enlab.urlshortener.dtos.ShortUrlDto;
 import hslu.enlab.urlshortener.entities.ShortUrl;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,11 +14,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShortUrlMapper {
 
+    @Value("${redirection.timeout}")
+    private Integer redirectionTimeout;
+
     public ShortUrlDto toDto(ShortUrl shortUrl) {
         return new ShortUrlDto(
                 shortUrl.getId(),
                 shortUrl.getShortUrl(),
-                shortUrl.getUrl()
+                shortUrl.getUrl(),
+                redirectionTimeout
         );
 
     }
