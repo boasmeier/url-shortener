@@ -44,7 +44,7 @@ class ShortUrlMapperTest {
         String shortenedUrl = "abcd99asd";
         String url = "https://foo.ch";
 
-        var dto = new ShortUrlDto(id, shortenedUrl, url);
+        var dto = new ShortUrlDto(id, shortenedUrl, url, 2);
 
         // act
         ShortUrl result = shortUrlMapper.fromDto(dto);

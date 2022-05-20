@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Advertisement</title>
+</head>
+<body style="display: flex; width: 100vw; height: 100vh; justify-content: center; align-items: center">
+</body>
+</html>
+
+<script src="//embed.bannerboo.com/bec31f11a3c49"></script>
+<script type="text/javascript">
+    function delayRedirect(url, redirectionTimeout) {
+        setTimeout( function () { window.location = url }, redirectionTimeout)
+    }
+
+    const url = "[[${shortUrl.url}]]";
+    const redirectionTimeout = [[${shortUrl.redirectionTimeout}]];
+
+    window.onload = function() {
+        delayRedirect(url, redirectionTimeout);
+    }
+</script>
