@@ -11,7 +11,7 @@ Feature: Get statistics of shortened urls
     When method post
     Then status 201
     * def firstResponse = response
-    And match firstResponse == {id: '#string', shortUrl: '#string', url: 'https://google.ch'}
+    And match firstResponse == {id: '#string', shortUrl: '#string', url: 'https://google.ch', redirectionTimeout: '#number'}
 
     Given path '/v1/shorturls/' + firstResponse.id + '/statistics'
     When method get

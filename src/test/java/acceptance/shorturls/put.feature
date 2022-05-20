@@ -11,11 +11,11 @@ Feature: Put shortened urls
     When method post
     Then status 201
     * def firstResponse = response
-    And match firstResponse == {id: '#string', shortUrl: '#string', url: 'https://google.ch'}
+    And match firstResponse == {id: '#string', shortUrl: '#string', url: 'https://google.ch', redirectionTimeout: '#number'}
 
     Given path '/v1/shorturls/' + firstResponse.id
     And request { id: '#(firstResponse.id)', shortUrl: '#(firstResponse.shortUrl)', url: 'https://www.google.ch' }
     And header Accept = 'application/json'
     When method put
     Then status 200
-    And match response == { id: '#(firstResponse.id)', shortUrl: '#(firstResponse.shortUrl)', url: 'https://www.google.ch' }
+    And match response == { id: '#(firstResponse.id)', shortUrl: '#(firstResponse.shortUrl)', url: 'https://www.google.ch', redirectionTimeout: '#number' }
