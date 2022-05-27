@@ -12,7 +12,7 @@ services:
       - db
 
   db:
-    image: ./docker/hsqldb-image/
+    build: ./docker/hsqldb-image/
     container_name: url-shortener-db
     restart: always
     volumes:
