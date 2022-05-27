@@ -15,8 +15,13 @@ services:
     image: ./docker/hsqldb-image/
     container_name: url-shortener-db
     restart: always
+    volumes:
+      - 'hsqldb_data:/opt/hsqldb-2.6.1/hsqldb/data'
     networks:
       - backend_net
+
+volumes:
+  hsqldb_data:
 
 networks:
   backend_net:
