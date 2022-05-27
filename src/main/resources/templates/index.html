@@ -30,7 +30,7 @@
 </html>
 
 <script type="text/javascript">
-    const host = 'http://localhost:8080';
+    const host = "[[${@environment.getProperty('api.host')}]]";
 
     async function createShortUrl(url) {
         let endpoint = `${host}/v1/shorturls`;
