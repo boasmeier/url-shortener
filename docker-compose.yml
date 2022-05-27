@@ -8,6 +8,15 @@ services:
     restart: always
     networks:
       - backend_net
+    depends_on:
+      - db
+
+  db:
+    image: ./docker/hsqldb-image/
+    container_name: url-shortener-db
+    restart: always
+    networks:
+      - backend_net
 
 networks:
   backend_net:
