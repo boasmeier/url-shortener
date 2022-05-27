@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS short_url (
     id UUID PRIMARY KEY,
     short_url VARCHAR (8) NOT NULL,
-    url VARCHAR(MAX) NOT NULL
+    url VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS statistic (
