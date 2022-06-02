@@ -14,6 +14,12 @@ Feature: Create shortened urls
     And match firstResponse == {id: '#string', shortUrl: '#string', url: 'https://google.ch', redirectionTimeout: '#number'}
 
     Given path '/v1/shorturls'
+    And header Accept = 'application/json'
+    When method get
+    Then status 200
+    And match response[0] == firstResponse
+
+    Given path '/v1/shorturls'
     And request { url: 'https://google.ch' }
     And header Accept = 'application/json'
     When method post

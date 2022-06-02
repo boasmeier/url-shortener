@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -50,6 +51,13 @@ public class ShortUrlController {
         this.shortUrlMapper = shortUrlMapper;
         this.statisticService = statisticService;
         this.statisticMapper = statisticMapper;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ShortUrlDto>> getShortUrls() {
+        List<ShortUrl> shortUrls = shortUrlService.findAll();
+
+        return ResponseEntity.ok(shortUrlMapper.toDtos(shortUrls));
     }
 
     @PostMapping

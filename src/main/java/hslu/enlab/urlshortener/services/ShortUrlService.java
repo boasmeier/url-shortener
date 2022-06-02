@@ -6,6 +6,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -43,6 +44,10 @@ public class ShortUrlService {
         createDefaultStatistic(urlEntity.getId());
 
         return urlEntity;
+    }
+
+    public List<ShortUrl> findAll() {
+        return shortUrlRepository.findAll();
     }
 
     public ShortUrl put(ShortUrl shortUrl, UUID id) {
